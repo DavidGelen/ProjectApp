@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="transfer_recurring_frequency">
+        <item>Weekly</item>
+        <item>Fortnightly</item>
+        <item>Bi-Monthly</item>
+        <item>Monthly</item>
+        <item>Quarterly</item>
+        <item>Half-Yearly</item>
+        <item>Yearly</item>
+        <item>Daily</item>
+        <item>Monthly and Adhere to Month End</item>
+    </string-array>
+</resources>
