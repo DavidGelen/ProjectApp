@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit
  */
 class EdittTextSearchActivity : AppCompatActivity() {
 
-    private val searchEngine by lazy(LazyThreadSafetyMode.NONE) { SearchEngine (this) }
+    private val searchEngine by lazy(LazyThreadSafetyMode.NONE) { SearchEngine(this) }
 
     private var disposable: Disposable? = null
 
@@ -54,22 +54,21 @@ class EdittTextSearchActivity : AppCompatActivity() {
                 // this.hideProgress()
                 //this.showSearchResult(it)
 
-                Log.d("EdittTextSearchActivity","it -> $it")
+                Log.d("EdittTextSearchActivity", "it -> $it")
             }
     }
 
     private fun createTextWatchObservable(minLength: Int = 2, delayTime: Long = 1000) = Observable.create<String> {
-        val textWatcher = object: TextWatcher {
+        val textWatcher = object : TextWatcher {
             override fun afterTextChanged(s: Editable?) = Unit
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int)
-            {
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 s?.toString()?.run { it.onNext(this) }
             }
         }
         this.textSearch.addTextChangedListener(textWatcher)
         it.setCancellable { this.textSearch.removeTextChangedListener(textWatcher) }
-    }.filter{ it.length >= minLength }.debounce(delayTime, TimeUnit.MILLISECONDS)
+    }.filter { it.length >= minLength }.debounce(delayTime, TimeUnit.MILLISECONDS)
 
     private fun createButtonObservable() = Observable.create<String> {
         searchBtn.setOnClickListener { _ ->
@@ -89,4 +88,11 @@ class EdittTextSearchActivity : AppCompatActivity() {
 
     private fun getInputManager(): InputMethodManager =
         getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
+    override fun onStop() {
+        if (this.disposable?.isDisposed == false) {
+            this.disposable?.isDisposed
+        }
+        super.onStop()
+    }
 }
